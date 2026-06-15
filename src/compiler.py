@@ -153,6 +153,6 @@ def write_bin(content, filename):
     with open(filename, "wb") as f:
         f.write(content)
 
-data = assemble("program.asm")
-write_bin(data, "out.bin")
+data = assemble("Program/program.asm")
+write_bin(data, "program.bin")
 print("compilation done !")
