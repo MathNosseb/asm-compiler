@@ -30,8 +30,7 @@ suffisant pour écrire un script qui affiche **A** en blanc sur fond noir à l'�
 
 ## Le programme asm
 
-```
-asm
+```asm
 start:
     mov eax, 0x0F41 ;mise en mémoire du caractère A en blanc sur fond noir
     mov [0xB8000], eax ;on place le caractère à l'adresse de la mémoire vidéo
