@@ -5,7 +5,9 @@ table_mod = {
     "mem_8bits" : 0b01,
     "mem_32bits" : 0b10,
     "reg" : 0b11,
-
+    "push_reg32" : 0b01010000,
+    "push_imm32" : 0b01101000,
+    "pop_reg32" : 0b01011000
 }
 
 registers = {
@@ -141,8 +143,17 @@ def assemble(filename):
            
         elif mnemonic == "ret":
             output += bytes([0xC3])
-
-            
+        elif mnemonic == "push":
+            try:
+                #si ca passe c'est que on est sur une valeur hexa
+                int(op1, 0)
+                print("ERROR : pas encore gere, passe par un registre")
+                #output += struct.pack("<I", (table_mod["push_imm32"] + int(op1, 0)))
+            except:
+                #si c est pas une valeur c'est que l'on est sur un registre
+                output += struct.pack("<B", (table_mod["push_reg32"] + registers[op1]))
+        elif mnemonic == "pop" :
+            output += struct.pack("<B", (table_mod["pop_reg32"] + registers[op1]))
         line_number+=1
     
 
