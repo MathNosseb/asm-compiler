@@ -21,6 +21,8 @@ registers = {
     "edi": 0b111
 }
 
+db = {}
+
 def modRM(mnemonic, op1, op2, line_number):
     mod = 0b0
     reg = 0b0
@@ -154,16 +156,29 @@ def assemble(filename):
                 output += struct.pack("<B", (table_mod["push_reg32"] + registers[op1]))
         elif mnemonic == "pop" :
             output += struct.pack("<B", (table_mod["pop_reg32"] + registers[op1]))
+        elif mnemonic == "call" :
+            output += bytes([0xFF])
+            output += bytes([0xD0 + registers[op1]])
         line_number+=1
     
 
     return output
 
+def parse_data(filename):
+    lines = open(filename).read().splitlines()
+    line_number = 1
+    for command in lines:
+        tokens = command.replace(",", "").split()
+        if len(token) < 3 or token[1] != "db"
+            line_number+=1
+            continue
+        
+        line_number+=1
     
 def write_bin(content, filename):
     with open(filename, "wb") as f:
         f.write(content)
 
-data = assemble("Program/program.asm")
-write_bin(data, "program.bin")
+data = assemble("program.asm")
+write_bin(data, "program")
 print("compilation done !")
